@@ -1,15 +1,20 @@
 <?php
 
-use function Livewire\Volt\{state, mount, layout};
+use function Livewire\Volt\{state, mount, uses, layout};
+use Livewire\WithFileUploads;
 use App\Models\Project;
+use Illuminate\Support\Facades\Storage;
 
 layout('components.layouts.admin');
+uses([WithFileUploads::class]);
 
 state([
     'project' => null,
     'ficha_number' => '',
     'category' => '',
     'title' => '',
+    'image' => null,
+    'currentImage' => null,
     'status_label' => 'Presentado ✓',
     'status_color' => 'stamp',
     'description' => '',
@@ -29,6 +34,7 @@ mount(function (?Project $project = null) {
         $this->ficha_number = $project->ficha_number;
         $this->category = $project->category;
         $this->title = $project->title;
+        $this->currentImage = $project->image_path;
         $this->status_label = $project->status_label;
         $this->status_color = $project->status_color;
         $this->description = $project->description;
@@ -62,6 +68,7 @@ $save = function () {
         'repo_url' => 'nullable|url',
         'demo_url' => 'nullable|url',
         'order' => 'required|integer',
+        'image' => 'nullable|image|max:4096',
     ]);
 
     // parsea "Label: Valor" por línea
@@ -98,6 +105,13 @@ $save = function () {
         'published' => $this->published,
     ];
 
+    if ($this->image) {
+        if ($this->project && $this->project->image_path) {
+            Storage::disk('public')->delete($this->project->image_path);
+        }
+        $data['image_path'] = $this->image->store('projects', 'public');
+    }
+
     if ($this->project) {
         $this->project->update($data);
     } else {
@@ -119,6 +133,23 @@ $save = function () {
     </h1>
 
     <form wire:submit="save" class="space-y-5">
+
+        <div>
+            <label class="font-mono text-[11px] uppercase text-paper-dim block mb-2">Imagen del proyecto</label>
+            @if ($image)
+                <img src="{{ $image->temporaryUrl() }}" class="w-full h-40 object-cover rounded-sm border-2 border-stamp mb-2">
+            @elseif ($currentImage)
+                <img src="{{ Storage::url($currentImage) }}" class="w-full h-40 object-cover rounded-sm border border-line mb-2">
+            @else
+                <div class="w-full h-40 rounded-sm bg-surface-2 border border-dashed border-line flex items-center justify-center font-mono text-xs text-paper-dim mb-2">
+                    sin imagen
+                </div>
+            @endif
+            <input type="file" wire:model="image" accept="image/*"
+                   class="font-mono text-xs text-paper-dim file:mr-3 file:py-2 file:px-3 file:rounded-sm file:border file:border-line file:bg-surface file:text-paper file:font-mono file:text-xs hover:file:border-stamp">
+            <div wire:loading wire:target="image" class="font-mono text-[11px] text-stamp mt-1.5">Subiendo...</div>
+            @error('image') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
+        </div>
 
         <div class="grid grid-cols-3 gap-4">
             <div>
