@@ -10,6 +10,7 @@ class Project extends Model
         'ficha_number',
         'category',
         'title',
+        'image_path',
         'status_label',
         'status_color',
         'description',

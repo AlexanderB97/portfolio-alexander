@@ -88,7 +88,12 @@ with([
 
             @foreach ($projects as $project)
                 <div class="bg-surface border border-line rounded hover:border-stamp-dim hover:-translate-y-1 transition mb-8 overflow-hidden">
-                    <div class="flex justify-between items-start px-8 pt-7 pb-5 border-b border-dashed border-line">
+    @if ($project->image_path)
+        <img src="{{ Storage::url($project->image_path) }}"
+             alt="{{ $project->title }}"
+             class="w-full h-56 object-cover border-b border-line">
+    @endif
+    <div class="flex justify-between items-start px-8 pt-7 pb-5 border-b border-dashed border-line">
                         <div>
                             <div class="font-mono text-xs text-paper-dim tracking-wide">
                                 FICHA N° <b class="text-paper">{{ str_pad($project->ficha_number, 3, '0', STR_PAD_LEFT) }}</b> — {{ $project->category }}
