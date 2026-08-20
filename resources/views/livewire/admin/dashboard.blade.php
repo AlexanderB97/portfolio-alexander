@@ -39,6 +39,10 @@ $delete = function ($id) {
             <p class="font-mono text-xs text-paper-dim mt-1">{{ $projects->count() }} proyecto(s)</p>
         </div>
         <div class="flex gap-3">
+            <a href="/admin/profile" wire:navigate
+               class="font-mono text-xs px-4 py-2.5 border border-line rounded-sm hover:border-stamp hover:text-stamp transition">
+                Editar perfil
+            </a>
             <a href="/admin/projects/create" wire:navigate
                class="font-mono text-xs px-4 py-2.5 rounded-sm bg-stamp text-ink font-bold hover:bg-emerald-500 transition">
                 + Nuevo proyecto
