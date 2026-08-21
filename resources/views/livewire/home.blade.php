@@ -152,6 +152,69 @@ with([
             @endforeach
         </section>
 
+        {{-- STACK --}}
+        <section id="stack" class="max-w-5xl mx-auto px-8 py-24">
+            <div class="flex items-baseline gap-4 mb-14">
+                <span class="font-mono text-stamp text-sm">02</span>
+                <h2 class="font-display font-semibold text-3xl">Stack de trabajo</h2>
+                <div class="flex-1 h-px bg-line"></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-line border border-line">
+                <div class="bg-surface p-6">
+                    <div class="font-mono text-[10px] uppercase text-stamp tracking-widest mb-2.5">Backend</div>
+                    <ul class="space-y-1 text-sm">
+                        <li>— Laravel 12</li>
+                        <li>— Livewire 3 + Volt</li>
+                        <li>— PHP</li>
+                    </ul>
+                </div>
+                <div class="bg-surface p-6">
+                    <div class="font-mono text-[10px] uppercase text-stamp tracking-widest mb-2.5">Frontend</div>
+                    <ul class="space-y-1 text-sm">
+                        <li>— Tailwind CSS</li>
+                        <li>— Alpine.js</li>
+                        <li>— Blade</li>
+                    </ul>
+                </div>
+                <div class="bg-surface p-6">
+                    <div class="font-mono text-[10px] uppercase text-stamp tracking-widest mb-2.5">Datos</div>
+                    <ul class="space-y-1 text-sm">
+                        <li>— MySQL 8.0</li>
+                        <li>— MongoDB</li>
+                        <li>— Normalización avanzada</li>
+                    </ul>
+                </div>
+                <div class="bg-surface p-6">
+                    <div class="font-mono text-[10px] uppercase text-stamp tracking-widest mb-2.5">Flujo de equipo</div>
+                    <ul class="space-y-1 text-sm">
+                        <li>— Git por épica + PR</li>
+                        <li>— Conventional Commits</li>
+                        <li>— Code review</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        {{-- TIF --}}
+        <section id="tif" class="max-w-5xl mx-auto px-8 py-24">
+            <div class="flex items-baseline gap-4 mb-14">
+                <span class="font-mono text-stamp text-sm">03</span>
+                <h2 class="font-display font-semibold text-3xl">En curso ahora</h2>
+                <div class="flex-1 h-px bg-line"></div>
+            </div>
+
+            <div class="bg-surface border border-stamp-dim rounded p-8 flex items-center justify-between gap-6 flex-wrap">
+                <div class="max-w-lg">
+                    <h3 class="font-display font-semibold text-xl mb-2">Trabajo Final Integrador — Tecnicatura en Programación</h3>
+                    <p class="text-paper-dim text-sm">
+                        Proyecto de cierre de carrera con intención comercial real, no solo académica: sistema de gestión (kiosco o clínica dental) con integración fiscal ARCA y cliente real en evaluación.
+                    </p>
+                </div>
+                <div class="w-2.5 h-2.5 rounded-full bg-stamp flex-shrink-0 animate-pulse"></div>
+            </div>
+        </section>
+
         {{-- CONTACTO --}}
         <section id="contacto" class="max-w-5xl mx-auto px-8 py-24 text-center">
             <h2 class="font-display font-bold text-4xl md:text-5xl mb-5">¿Tenés un sistema<br>que necesita construirse?</h2>
