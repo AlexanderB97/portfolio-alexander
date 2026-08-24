@@ -15,39 +15,17 @@ cd "$APP_DIR" || exit 1
 echo "== Configurando Nginx =="
 
 # Laravel debe servirse desde /public
-sed -i 's|root /home/site/wwwroot;|root /home/site/wwwroot/public;|' "$NGINX_CONFIG"
-sed -i 's|root /home/site/wwwroot;|root /home/site/wwwroot/public;|' /etc/nginx/sites-available/default 2>/dev/null || true
+sed -i 's|root /home/site/wwwroot;|root /home/site/wwwroot/public;|g' \
+    /etc/nginx/sites-enabled/default \
+    /etc/nginx/sites-available/default 2>/dev/null || true
 
-# Configuración correcta para Laravel:
-# Las rutas que no sean archivos físicos pasan a index.php.
-python3 - <<'PY'
-from pathlib import Path
-
-paths = [
-    Path("/etc/nginx/sites-enabled/default"),
-    Path("/etc/nginx/sites-available/default"),
-]
-
-for path in paths:
-    if not path.exists():
-        continue
-
-    text = path.read_text()
-
-    old = """    location / {
-        index index.php index.html index.htm hostingstart.html;
-    }"""
-
-    new = """    location / {
-        try_files $uri $uri/ /index.php?$query_string;
-        index index.php index.html index.htm;
-    }"""
-
-    if old in text:
-        text = text.replace(old, new)
-
-    path.write_text(text)
-PY
+# Configuración Laravel:
+# Todas las rutas pasan por index.php si no existe un archivo físico.
+sed -i '/location \/ {/,/}/c\
+    location / {\
+        try_files $uri $uri/ /index.php?$query_string;\
+        index index.php index.html index.htm;\
+    }' "$NGINX_CONFIG"
 
 echo "== Verificando Nginx =="
 
